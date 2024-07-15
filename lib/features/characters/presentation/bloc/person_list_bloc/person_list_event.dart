@@ -1,5 +1,5 @@
 class PersonListEvent{}
 
-class PersonListStateGetData extends PersonListEvent{
+class FetchPersonList extends PersonListEvent{
   
 }

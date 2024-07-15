@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:flutter_lesson_3_rick_v2/core/error/exception.dart';
+import 'package:flutter_lesson_3_rick_v2/core/error/exceptions.dart';
 import 'package:flutter_lesson_3_rick_v2/domain/service_interface/local_service.dart';
 import 'package:flutter_lesson_3_rick_v2/features/locations/data/dto/location_dto.dart';
 import 'package:injectable/injectable.dart';
@@ -7,11 +7,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 const CACHED_LOCATION_LIST = 'CACHED_LOCATION_LIST';
 const CACHED_LOCATION_LAST_PAGE = 'CACHED_LOCATION_LAST_PAGE';
+const CACHED_LOCATION_QUERIES_LIST = 'CACHED_LOCATION_QUERIES_LIST';
 
 @named
 @LazySingleton(as: LocalDataService<LocationDto>)
 class LocalDataServiceLocationsImpl implements LocalDataService<LocationDto> {
-  
   final SharedPreferences sharedPreferences;
 
   LocalDataServiceLocationsImpl({required this.sharedPreferences});
@@ -45,18 +45,16 @@ class LocalDataServiceLocationsImpl implements LocalDataService<LocationDto> {
   Future<int> getLastPage() async {
     return sharedPreferences.getInt(CACHED_LOCATION_LAST_PAGE) ?? 0;
   }
-  
-  @override
-  Future<List<String>> getListQueries() {
-    // TODO: implement getListQueries
-    throw UnimplementedError();
-  }
-  
-  @override
-  Future<void> queriesToCache(String queries) {
-    // TODO: implement queriesToCache
-    throw UnimplementedError();
-  }
-  
 
+  @override
+  Future<void> cacheQuery(String query) async {
+    final queriesList =
+        sharedPreferences.getStringList(CACHED_LOCATION_QUERIES_LIST) ?? [];
+    queriesList.add(query);
+  }
+
+  @override
+  Future<List<String>> getCachedQueries() async {
+    return sharedPreferences.getStringList(CACHED_LOCATION_QUERIES_LIST) ?? [];
+  }
 }

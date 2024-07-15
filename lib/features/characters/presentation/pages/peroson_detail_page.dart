@@ -18,7 +18,6 @@ class PersonDetailPage extends StatefulWidget {
 class _PersonDetailPageState extends State<PersonDetailPage> {
   @override
   void initState() {
-    // context.read<PersonListCubit>().fetchPersonDetails(widget.person);
     super.initState();
   }
 

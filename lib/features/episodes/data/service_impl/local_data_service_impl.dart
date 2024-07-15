@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:flutter_lesson_3_rick_v2/core/error/exception.dart';
+import 'package:flutter_lesson_3_rick_v2/core/error/exceptions.dart';
 import 'package:flutter_lesson_3_rick_v2/domain/service_interface/local_service.dart';
 import 'package:flutter_lesson_3_rick_v2/features/episodes/data/dto/episode_dto.dart';
 import 'package:injectable/injectable.dart';
@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 const CACHED_EPISODE_LIST = 'CACHED_EPISODE_LIST';
 const CACHED_EPISODE_LAST_PAGE = 'CACHED_EPISODE_LAST_PAGE';
+const CACHED_EPIOSDE_QUERIES_LIST = 'CACHED_EPIOSDE_QUERIES_LIST';
 
 @named
 @LazySingleton(as: LocalDataService<EpisodeDto>)
@@ -26,7 +27,6 @@ class LocalDataServiceEpisodesImpl implements LocalDataService<EpisodeDto> {
         CACHED_EPISODE_LIST, currentJsonEpisodesList);
     await sharedPreferences.setInt(CACHED_EPISODE_LAST_PAGE, page);
   }
-  
 
   @override
   Future<List<EpisodeDto>> getLastDtosFromCache() async {
@@ -45,18 +45,16 @@ class LocalDataServiceEpisodesImpl implements LocalDataService<EpisodeDto> {
   Future<int> getLastPage() async {
     return sharedPreferences.getInt(CACHED_EPISODE_LAST_PAGE) ?? 0;
   }
-  
-  @override
-  Future<List<String>> getListQueries() {
-    // TODO: implement getListQueries
-    throw UnimplementedError();
-  }
-  
-  @override
-  Future<void> queriesToCache(String queries) {
-    // TODO: implement queriesToCache
-    throw UnimplementedError();
-  }
-  
 
+  @override
+  Future<void> cacheQuery(String query) async {
+   final queryList =  sharedPreferences.getStringList(CACHED_EPIOSDE_QUERIES_LIST) ?? [];
+   queryList.add(query);
+   sharedPreferences.setStringList(CACHED_EPIOSDE_QUERIES_LIST, queryList);
+  }
+
+  @override
+  Future<List<String>> getCachedQueries() async {
+    return sharedPreferences.getStringList(CACHED_EPIOSDE_QUERIES_LIST) ?? [];
+  }
 }

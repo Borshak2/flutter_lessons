@@ -19,7 +19,7 @@ class PersonListBloc extends Bloc<PersonListEvent, PersonListState> {
   final RickAndMortyApiService<PersonEntity> service;
  
   void _registerHandlers() {
-    on<PersonListStateGetData>(
+    on<FetchPersonList>(
       (_, emit) async {
         service.updateData();
       }

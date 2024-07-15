@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_lesson_3_rick_v2/core/error/exception.dart';
+import 'package:flutter_lesson_3_rick_v2/core/error/exceptions.dart';
 import 'package:flutter_lesson_3_rick_v2/domain/entities/location_entity.dart';
 import 'package:flutter_lesson_3_rick_v2/domain/service_interface/local_service.dart';
 import 'package:flutter_lesson_3_rick_v2/features/locations/data/dto/location_dto.dart';
@@ -38,6 +38,10 @@ class LocationRepository {
     }
   }
 
+Future<List<String>> getQueriesList() async{
+  return await _localService.getCachedQueries();
+}
+
   Future<int> getLastPage() async{
     return await _localService.getLastPage();
   }  
@@ -61,6 +65,7 @@ class LocationRepository {
   Future<List<LocationEntity>> fetchDataByFilter(
       LocationsFilter filter, String data) async {
     try {
+      _localService.cacheQuery(data);
       final filterValue = _filters[filter]!;
       final response = await _dio.get('$_endpoint$filterValue$data');
       return _processResponseAndCache(response, 1);

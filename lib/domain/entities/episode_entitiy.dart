@@ -40,25 +40,3 @@ class EpisodeEntity extends ShortEpisodeEntity {
         episode,
       ];
 }
-
-//  factory EpisodeEntity.fromJson(Map<String, dynamic> json) {
-//     List list = json['characters'];
-//     return EpisodeEntity(
-//         id: json['id'],
-//         name: json['name'],
-//         airDate: json['air_date'],
-//         episode: json['episode'],
-//         characters: [...list],
-//         url: json['url']);
-//   }
-
-//   Map<String, dynamic> toJson() {
-//     return {
-//       'id': id,
-//       'name': name,
-//       'air_date': airDate,
-//       'episode': episode,
-//       'characters': characters,
-//       'url': url,
-//     };
-//   }

@@ -47,16 +47,15 @@ class LocationsApiServiceImpl implements RickAndMortyApiService<LocationEntity> 
   }
   
   @override
-  Future<List<String>> getSearchHistory() {
-    // TODO: implement getSearchHistory
-    throw UnimplementedError();
+  Future<List<String>> getSearchHistory() async{
+    return await repository.getQueriesList();
   }
   
   @override
-  Future<List<LocationEntity>> search(String query) {
-    // TODO: implement search
-    throw UnimplementedError();
+  Future<List<LocationEntity>> searchEntity(String query) async {
+    return await repository.fetchDataByFilter(LocationsFilter.name, query);
   }
   
+ 
 
 }

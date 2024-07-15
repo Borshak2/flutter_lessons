@@ -19,7 +19,7 @@ class _ListPersonWidgetState extends State<ListPersonWidget> {
     scrollController.addListener(() {
       if (scrollController.position.atEdge) {
         if (scrollController.position.pixels != 0) {
-          context.read<PersonListBloc>().add(PersonListStateGetData());
+          context.read<PersonListBloc>().add(FetchPersonList());
         }
       }
     });

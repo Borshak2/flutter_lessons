@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:flutter_lesson_3_rick_v2/core/error/exception.dart';
+import 'package:flutter_lesson_3_rick_v2/core/error/exceptions.dart';
 import 'package:flutter_lesson_3_rick_v2/domain/service_interface/local_service.dart';
 import 'package:flutter_lesson_3_rick_v2/features/characters/data/dto/person_dto.dart';
 import 'package:injectable/injectable.dart';
@@ -47,14 +47,16 @@ class LocalDataServicePersonsImpl implements LocalDataService<PersonDto> {
   }
 
   @override
-  Future<List<String>> getListQueries() async {
+  Future<List<String>> getCachedQueries() async {
     return sharedPreferences.getStringList(CACHED_QUERIES_LIST) ?? [];
   }
 
   @override
-  Future<void> queriesToCache(String query) async {
+  Future<void> cacheQuery(String query) async {
     final queriesList = sharedPreferences.getStringList(CACHED_QUERIES_LIST) ?? [];
     queriesList.add(query);
     await sharedPreferences.setStringList(CACHED_QUERIES_LIST, queriesList);
   }
+  
+
 }

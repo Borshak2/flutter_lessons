@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_lesson_3_rick_v2/core/error/exception.dart';
+import 'package:flutter_lesson_3_rick_v2/core/error/exceptions.dart';
 import 'package:flutter_lesson_3_rick_v2/domain/entities/person_entitiy.dart';
 import 'package:flutter_lesson_3_rick_v2/domain/service_interface/local_service.dart';
 import 'package:flutter_lesson_3_rick_v2/features/characters/data/dto/person_dto.dart';
@@ -26,9 +26,7 @@ class PersonRepository {
 
   PersonRepository({
     required Dio dio,
-    // required LocalDataService<PersonDto> localService,
    @Named.from(LocalDataServicePersonsImpl) required LocalDataService<PersonDto> localService,
-
   }) : _dio = dio,
        _localService = localService;
 
@@ -73,7 +71,7 @@ class PersonRepository {
   }
 
   Future<List<String>> getSearchHistory()async{
-    return await _localService.getListQueries();
+    return await _localService.getCachedQueries();
   }
 
 
@@ -112,7 +110,7 @@ class PersonRepository {
     if (response.statusCode == 200) {
   final List<dynamic> jsonData = response.data['results'] as List<dynamic>;
         final List<PersonDto> dtos = jsonData.map((json) => PersonDto.fromJson(json)).toList();
-         _localService.queriesToCache(query);
+         _localService.cacheQuery(query);
         return _parseCharacterDtos(dtos);
     } else {
       throw Exception('Failed to load data');

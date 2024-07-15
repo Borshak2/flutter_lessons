@@ -5,5 +5,5 @@ abstract class RickAndMortyApiService<T>{
   Stream<List<T>> get getterEntitiesStream;
   List<T> get getterEntitiesList;
   Future<List<String>> getSearchHistory();
-  Future<List<T>> search(String query);
+  Future<List<T>> searchEntity(String query);
 }

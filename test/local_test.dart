@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:flutter_lesson_3_rick_v2/core/error/exception.dart';
+import 'package:flutter_lesson_3_rick_v2/core/error/exceptions.dart';
 import 'package:flutter_lesson_3_rick_v2/features/characters/data/service_impl/local_data_service_perons.dart';
 import 'package:flutter_lesson_3_rick_v2/features/episodes/data/service_impl/local_data_service_impl.dart';
 import 'package:flutter_lesson_3_rick_v2/features/locations/data/dto/location_dto.dart';

@@ -50,15 +50,14 @@ class EpisodesApiServiceImpl implements RickAndMortyApiService<EpisodeEntity> {
   }
   
   @override
-  Future<List<String>> getSearchHistory() {
-    // TODO: implement getSearchHistory
-    throw UnimplementedError();
+  Future<List<String>> getSearchHistory() async {
+    return await repository.getQuerisList();
   }
   
+  
   @override
-  Future<List<EpisodeEntity>> search(String query) {
-    // TODO: implement search
-    throw UnimplementedError();
+  Future<List<EpisodeEntity>> searchEntity(String query) async{
+    return repository.fetchDataByFilter(EpisodeFilter.name, query);
   }
   
 

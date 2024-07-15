@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_lesson_3_rick_v2/core/error/exception.dart';
+import 'package:flutter_lesson_3_rick_v2/core/error/exceptions.dart';
 import 'package:flutter_lesson_3_rick_v2/domain/entities/episode_entitiy.dart';
 import 'package:flutter_lesson_3_rick_v2/domain/service_interface/local_service.dart';
 import 'package:flutter_lesson_3_rick_v2/features/episodes/data/dto/episode_dto.dart';
@@ -41,6 +41,10 @@ class EpisodeRepository {
     return await _localService.getLastPage();
   }
 
+  Future<List<String>> getQuerisList() async{
+    return await _localService.getCachedQueries();
+  }
+
   Future<List<EpisodeEntity>> fetchEpisodesByPage(int page) async {
     final lastCachedPage = await _localService.getLastPage();
     if (lastCachedPage <= page) {
@@ -60,6 +64,7 @@ class EpisodeRepository {
   Future<List<EpisodeEntity>> fetchDataByFilter(
       EpisodeFilter filter, String data) async {
     try {
+      _localService.cacheQuery(data);
       final filterValue = _filters[filter]!;
       final response = await _dio.get('$_endpoint$filterValue$data');
       return _processResponseAndCache(response, 1);

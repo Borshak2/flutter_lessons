@@ -17,7 +17,7 @@ class SearchBloc extends Bloc<SearchBlocEvent, SearchBlocState> {
   void _onEvent(SearchPerson event, emit) async {
     emit(SearchBlocStateLoading(historyQueries.toList()));
     try {
-      final resault = await service.search(event.query);
+      final resault = await service.searchEntity(event.query);
       emit(SearchBlocStateLoaded(resault,historyQueries.toList()));
       historyQueries.add(event.query);
     } catch (_) {

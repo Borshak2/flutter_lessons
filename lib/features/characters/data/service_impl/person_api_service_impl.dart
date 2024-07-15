@@ -53,7 +53,7 @@ class PersonApiServiceImpl implements RickAndMortyApiService<PersonEntity> {
   }
   
   @override
-  Future<List<PersonEntity>> search(String query)async {
+  Future<List<PersonEntity>> searchEntity(String query)async {
     return await repository.fetchDataByFilter(PersonFilter.name, query);
   }
  
