@@ -74,17 +74,17 @@ extension GetItInjectableX on _i1.GetIt {
     );
     gh.lazySingleton<_i11.Dio>(
         () => registerModule.dio(gh<String>(instanceName: 'BaseUrl')));
-    gh.factory<_i12.LocationRepository>(() => _i12.LocationRepository(
+    gh.singleton<_i12.LocationRepository>(() => _i12.LocationRepository(
           dio: gh<_i11.Dio>(),
           localService: gh<_i4.LocalDataService<_i5.LocationDto>>(
               instanceName: 'LocalDataServiceLocationsImpl'),
         ));
-    gh.factory<_i13.EpisodeRepository>(() => _i13.EpisodeRepository(
+    gh.singleton<_i13.EpisodeRepository>(() => _i13.EpisodeRepository(
           dio: gh<_i11.Dio>(),
           localService: gh<_i4.LocalDataService<_i7.EpisodeDto>>(
               instanceName: 'LocalDataServiceEpisodesImpl'),
         ));
-    gh.factory<_i14.PersonRepository>(() => _i14.PersonRepository(
+    gh.singleton<_i14.PersonRepository>(() => _i14.PersonRepository(
           dio: gh<_i11.Dio>(),
           localService: gh<_i4.LocalDataService<_i9.PersonDto>>(
               instanceName: 'LocalDataServicePersonsImpl'),

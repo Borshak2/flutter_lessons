@@ -9,7 +9,7 @@ import 'package:injectable/injectable.dart';
 
 enum LocationsFilter { name, type, dimension }
 
-@injectable
+@singleton 
 class LocationRepository {
   final Map<LocationsFilter, String> _filters = {
     LocationsFilter.name: '?name=',

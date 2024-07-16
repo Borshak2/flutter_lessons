@@ -9,7 +9,7 @@ import 'package:injectable/injectable.dart';
 
 enum EpisodeFilter { name, episode }
 
-@injectable
+@singleton 
 class EpisodeRepository {
   final Map<EpisodeFilter, String> _filters = {
     EpisodeFilter.name: '?name=',

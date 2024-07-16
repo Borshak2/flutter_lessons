@@ -5,20 +5,10 @@ import 'package:flutter_lesson_3_rick_v2/domain/entities/person_entitiy.dart';
 
 import '../../../../../common/app_colors.dart';
 
-class PersonDetailPage extends StatefulWidget {
+class PersonDetailPage extends StatelessWidget {
   final PersonEntity person;
 
   const PersonDetailPage({super.key, required this.person});
-
-  @override
-  State<PersonDetailPage> createState() => _PersonDetailPageState();
-}
-
-class _PersonDetailPageState extends State<PersonDetailPage> {
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +24,7 @@ class _PersonDetailPageState extends State<PersonDetailPage> {
               height: 24,
             ),
             Text(
-              widget.person.name,
+              person.name,
               style: const TextStyle(
                 fontSize: 28,
                 color: Colors.white,
@@ -44,7 +34,7 @@ class _PersonDetailPageState extends State<PersonDetailPage> {
             const SizedBox(
               height: 12,
             ),
-            ImageCommon(width: 166, height: 166, url: widget.person.image),
+            ImageCommon(width: 166, height: 166, url: person.image),
             const SizedBox(
               height: 16,
             ),
@@ -55,7 +45,7 @@ class _PersonDetailPageState extends State<PersonDetailPage> {
                   height: 12,
                   width: 12,
                   decoration: BoxDecoration(
-                    color: widget.person.status == 'Alive'
+                    color: person.status == 'Alive'
                         ? Colors.green
                         : Colors.red,
                     borderRadius: BorderRadius.circular(8),
@@ -65,7 +55,7 @@ class _PersonDetailPageState extends State<PersonDetailPage> {
                   width: 8,
                 ),
                 Text(
-                  widget.person.status,
+                  person.status,
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 16,
@@ -77,15 +67,15 @@ class _PersonDetailPageState extends State<PersonDetailPage> {
             const SizedBox(
               height: 16,
             ),
-            if (widget.person.type.isNotEmpty)
-              ...buildText('Type:', widget.person.type),
-            ...buildText('Gender:', widget.person.gender),
+            if (person.type.isNotEmpty)
+              ...buildText('Type:', person.type),
+            ...buildText('Gender:', person.gender),
             ...buildText('Number of episodes: ',
-                widget.person.episode.length.toString()),
-            ...buildText('Species:', widget.person.species),
-            ...buildText('Last known location:', widget.person.location.name),
-            ...buildText('Origin:', widget.person.origin.name),
-            ...buildText('Was created:', widget.person.created.toString()),
+                person.episode.length.toString()),
+            ...buildText('Species:', person.species),
+            ...buildText('Last known location:', person.location.name),
+            ...buildText('Origin:', person.origin.name),
+            ...buildText('Was created:', person.created.toString()),
             const SizedBox(
               height: 16,
             ),

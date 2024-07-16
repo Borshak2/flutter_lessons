@@ -9,7 +9,7 @@ import 'package:injectable/injectable.dart';
 
 enum PersonFilter { name, status, species, type, gender }
 
-@injectable
+@singleton 
 class PersonRepository {
   final Map<PersonFilter, String> _filters = {
     PersonFilter.name: '?name=',
