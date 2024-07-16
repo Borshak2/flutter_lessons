@@ -20,7 +20,6 @@ class PersonDto extends Equatable {
   final List<String> episode;
   final DateTime created;
 
-
   String get originName => origin['name'] ?? '';
   String get originUrl => origin['url'] ?? '';
   String get locationName => location['name'] ?? '';

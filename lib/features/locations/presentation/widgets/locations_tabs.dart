@@ -11,13 +11,14 @@ class LocationsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
- return BlocProvider(
+    return BlocProvider(
       create: (_) {
-        final service = inject<RickAndMortyApiService<LocationEntity>>(instanceName: "LocationService");
+        final service = inject<RickAndMortyApiService<LocationEntity>>(
+            instanceName: "LocationService");
         final initalData = service.getterEntitiesList;
-        return LocationsListBloc(service: service, oldList: initalData);},
-        child: ListLocationsWidget(),
-        );
+        return LocationsListBloc(service: service, oldList: initalData);
+      },
+      child: ListLocationsWidget(),
+    );
   }
 }
-

@@ -7,7 +7,6 @@ import 'package:flutter_lesson_3_rick_v2/features/characters/data/mapper/person_
 import 'package:flutter_lesson_3_rick_v2/features/characters/data/service_impl/local_data_service_perons.dart';
 import 'package:injectable/injectable.dart';
 
-
 enum PersonFilter { name, status, species, type, gender }
 
 @injectable
@@ -26,14 +25,14 @@ class PersonRepository {
 
   PersonRepository({
     required Dio dio,
-   @Named.from(LocalDataServicePersonsImpl) required LocalDataService<PersonDto> localService,
-  }) : _dio = dio,
-       _localService = localService;
+    @Named.from(LocalDataServicePersonsImpl)
+    required LocalDataService<PersonDto> localService,
+  })  : _dio = dio,
+        _localService = localService;
 
-
-  Future<int> getLastPage()async{
+  Future<int> getLastPage() async {
     return await _localService.getLastPage();
-  }     
+  }
 
   Future<List<PersonEntity>> fetchAllData() async {
     try {
@@ -54,7 +53,8 @@ class PersonRepository {
         throw ServerException();
       }
     } else {
-      final cachedDtos = _localService.getLastDtosFromCache() as List<PersonDto>;
+      final cachedDtos =
+          _localService.getLastDtosFromCache() as List<PersonDto>;
       return _parseCharacterDtos(cachedDtos);
     }
   }
@@ -64,16 +64,15 @@ class PersonRepository {
     try {
       final filterValue = _filters[filter]!;
       final response = await _dio.get('$_endpoint$filterValue$data');
-      return _parseResponse(response,data);
+      return _parseResponse(response, data);
     } catch (e) {
       throw ServerException();
     }
   }
 
-  Future<List<String>> getSearchHistory()async{
+  Future<List<String>> getSearchHistory() async {
     return await _localService.getCachedQueries();
   }
-
 
   Future<PersonEntity> fetchDataByUrl(String url) async {
     try {
@@ -89,11 +88,14 @@ class PersonRepository {
     return dtos.map((dto) => PersonMapper.toEntity(dto)).toList();
   }
 
-  Future<List<PersonEntity>> _processResponseAndCache(Response response, int page) async {
+  Future<List<PersonEntity>> _processResponseAndCache(
+      Response response, int page) async {
     try {
       if (response.statusCode == 200) {
-        final List<dynamic> jsonData = response.data['results'] as List<dynamic>;
-        final List<PersonDto> dtos = jsonData.map((json) => PersonDto.fromJson(json)).toList();
+        final List<dynamic> jsonData =
+            response.data['results'] as List<dynamic>;
+        final List<PersonDto> dtos =
+            jsonData.map((json) => PersonDto.fromJson(json)).toList();
         await _localService.addDtosToCache(dtos, page);
         return _parseCharacterDtos(dtos);
       } else {
@@ -104,18 +106,15 @@ class PersonRepository {
     }
   }
 
-
-
-  List<PersonEntity> _parseResponse(Response response,String query) {
+  List<PersonEntity> _parseResponse(Response response, String query) {
     if (response.statusCode == 200) {
-  final List<dynamic> jsonData = response.data['results'] as List<dynamic>;
-        final List<PersonDto> dtos = jsonData.map((json) => PersonDto.fromJson(json)).toList();
-         _localService.cacheQuery(query);
-        return _parseCharacterDtos(dtos);
+      final List<dynamic> jsonData = response.data['results'] as List<dynamic>;
+      final List<PersonDto> dtos =
+          jsonData.map((json) => PersonDto.fromJson(json)).toList();
+      _localService.cacheQuery(query);
+      return _parseCharacterDtos(dtos);
     } else {
       throw Exception('Failed to load data');
     }
   }
 }
-
-

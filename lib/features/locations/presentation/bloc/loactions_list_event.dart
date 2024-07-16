@@ -1,5 +1,3 @@
-class LocationsListEvent{}
+class LocationsListEvent {}
 
-class LocationsListStateGetData extends LocationsListEvent{
-  
-}
+class LocationsListStateGetData extends LocationsListEvent {}

@@ -5,7 +5,6 @@ import 'package:flutter_lesson_3_rick_v2/features/episodes/presentation/bloc/epi
 import 'package:flutter_lesson_3_rick_v2/features/episodes/presentation/bloc/episode_list_state.dart';
 import 'package:flutter_lesson_3_rick_v2/features/episodes/presentation/bloc/epsiode_list_bloc.dart';
 
-
 class ListEpisodesWidget extends StatefulWidget {
   ListEpisodesWidget({Key? key}) : super(key: key);
 
@@ -20,7 +19,7 @@ class _ListEpisodesWidgetState extends State<ListEpisodesWidget> {
     scrollController.addListener(() {
       if (scrollController.position.atEdge) {
         if (scrollController.position.pixels != 0) {
-          context.read<EpsiodeListBloc>().add(EpisodeListStateGetData());
+          context.read<EpisodeListBloc>().add(EpisodeListStateGetData());
         }
       }
     });
@@ -31,10 +30,10 @@ class _ListEpisodesWidgetState extends State<ListEpisodesWidget> {
     super.initState();
     setupController(context);
   }
- 
+
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<EpsiodeListBloc, EpisodeListState>(
+    return BlocBuilder<EpisodeListBloc, EpisodeListState>(
       builder: (context, state) {
         if (state.dataState == DataState.loading) {
           return Center(child: CircularProgressIndicator());

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter_lesson_3_rick_v2/domain/entities/episode_entitiy.dart';
 import 'package:flutter_lesson_3_rick_v2/domain/service_interface/api_service.dart';
@@ -5,26 +7,64 @@ import 'package:flutter_lesson_3_rick_v2/features/characters/presentation/bloc/p
 import 'package:flutter_lesson_3_rick_v2/features/episodes/presentation/bloc/episode_list_event.dart';
 import 'package:flutter_lesson_3_rick_v2/features/episodes/presentation/bloc/episode_list_state.dart';
 
-class EpsiodeListBloc extends Bloc<EpisodeListEvent, EpisodeListState> {
-  EpsiodeListBloc({
+class EpisodeListBloc extends Bloc<EpisodeListEvent, EpisodeListState> {
+  EpisodeListBloc({
     required this.service,
-    List<EpisodeEntity>? oldList,
   }) : super(
-     oldList == null && oldList!.isNotEmpty ?
-    EpisodeListState(episodesList: [], dataState: DataState.empty) : EpisodeListState(episodesList: oldList, dataState: DataState.loaded),
-  ){
-    // ignore: invalid_use_of_visible_for_testing_member
-    service.getterEntitiesStream.listen((events) => emit(state.copyWith(episodesList: events,dataState: DataState.loaded)));
+          EpisodeListState(
+            episodesList: service.getterEntitiesList, 
+            dataState: service.getterEntitiesList.isEmpty ? DataState.empty : DataState.loaded,
+          ),
+        ) {
+    _sub = service.getterEntitiesStream.listen((events) => emit(
+        state.copyWith(episodesList: events, dataState: DataState.loaded)));
     _registerHandlers();
   }
 
   final RickAndMortyApiService<EpisodeEntity> service;
- 
+  late StreamSubscription<List<EpisodeEntity>> _sub;
+
   void _registerHandlers() {
-    on<EpisodeListStateGetData>(
-      (_, emit) async {
-        service.updateData();
-      }
-    );
+    on<EpisodeListStateGetData>((_, emit) async {
+      service.updateData();
+    });
+  }
+
+  @override
+  Future<void> close() {
+    _sub.cancel();
+    return super.close();
   }
 }
+
+
+// class EpsiodeListBloc extends Bloc<EpisodeListEvent, EpisodeListState> {
+//   EpsiodeListBloc({
+//     required this.service,
+//     List<EpisodeEntity>? oldList,
+//   }) : super(
+//           oldList == null && oldList!.isNotEmpty
+//               ? EpisodeListState(episodesList: [], dataState: DataState.empty)
+//               : EpisodeListState(
+//                   episodesList: oldList, dataState: DataState.loaded),
+//         ) {
+//     // ignore: invalid_use_of_visible_for_testing_member
+//     _sub = service.getterEntitiesStream.listen((events) => emit(
+//         state.copyWith(episodesList: events, dataState: DataState.loaded)));
+//     _registerHandlers();
+//   }
+
+//   final RickAndMortyApiService<EpisodeEntity> service;
+//   late StreamSubscription<List<EpisodeEntity>> _sub;
+//   void _registerHandlers() {
+//     on<EpisodeListStateGetData>((_, emit) async {
+//       service.updateData();
+//     });
+//   }
+
+//   @override
+//   Future<void> close() {
+//     _sub.cancel();
+//     return super.close();
+//   }
+// }

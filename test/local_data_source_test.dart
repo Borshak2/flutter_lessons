@@ -26,9 +26,7 @@ void main() {
         "url": "https://rickandmortyapi.com/api/location/20"
       },
       "image": "https://rickandmortyapi.com/api/character/avatar/361.jpeg",
-      "episode": [
-        "https://rickandmortyapi.com/api/episode/27"
-      ],
+      "episode": ["https://rickandmortyapi.com/api/episode/27"],
       "url": "https://rickandmortyapi.com/api/character/361",
       "created": "2018-01-10T18:20:41.703Z"
     };
@@ -49,9 +47,7 @@ void main() {
         "url": "https://rickandmortyapi.com/api/location/20"
       },
       "image": "https://rickandmortyapi.com/api/character/avatar/361.jpeg",
-      "episode": [
-        "https://rickandmortyapi.com/api/episode/27"
-      ],
+      "episode": ["https://rickandmortyapi.com/api/episode/27"],
       "url": "https://rickandmortyapi.com/api/character/361",
       "created": "2018-01-10T18:20:41.703Z"
     };
@@ -62,9 +58,11 @@ void main() {
     ];
 
     test('Add and Retrieve Persons from Cache', () async {
-      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-      LocalDataServicePersonsImpl service = LocalDataServicePersonsImpl(sharedPreferences: sharedPreferences);
-      
+      SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+      LocalDataServicePersonsImpl service =
+          LocalDataServicePersonsImpl(sharedPreferences: sharedPreferences);
+
       await service.addDtosToCache([PersonDto.fromJson(jsonPerson)], 1);
       await service.addDtosToCache([PersonDto.fromJson(jsonPerson2)], 2);
 
@@ -73,9 +71,11 @@ void main() {
     });
 
     test('Retrieve Last Cached Page', () async {
-      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-      LocalDataServicePersonsImpl service = LocalDataServicePersonsImpl(sharedPreferences: sharedPreferences);
-      
+      SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+      LocalDataServicePersonsImpl service =
+          LocalDataServicePersonsImpl(sharedPreferences: sharedPreferences);
+
       await service.addDtosToCache([PersonDto.fromJson(jsonPerson)], 1);
       await service.addDtosToCache([PersonDto.fromJson(jsonPerson2)], 2);
 

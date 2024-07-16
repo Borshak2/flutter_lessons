@@ -5,7 +5,6 @@ import 'package:flutter_lesson_3_rick_v2/features/locations/presentation/bloc/bl
 import 'package:flutter_lesson_3_rick_v2/features/locations/presentation/bloc/loactions_list_event.dart';
 import 'package:flutter_lesson_3_rick_v2/features/locations/presentation/bloc/locations_list_state.dart';
 
-
 class ListLocationsWidget extends StatefulWidget {
   ListLocationsWidget({Key? key}) : super(key: key);
 
@@ -31,7 +30,7 @@ class _ListLocationsWidgetState extends State<ListLocationsWidget> {
     super.initState();
     setupController(context);
   }
- 
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LocationsListBloc, LocationsListState>(

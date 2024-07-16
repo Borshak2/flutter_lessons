@@ -7,8 +7,7 @@ import 'package:flutter_lesson_3_rick_v2/features/episodes/data/mapper/episode_m
 import 'package:flutter_lesson_3_rick_v2/features/episodes/data/service_impl/local_data_service_impl.dart';
 import 'package:injectable/injectable.dart';
 
-
-enum EpisodeFilter { name, episode}
+enum EpisodeFilter { name, episode }
 
 @injectable
 class EpisodeRepository {
@@ -24,9 +23,10 @@ class EpisodeRepository {
   EpisodeRepository({
     required Dio dio,
     // required LocalDataService localService,
-    @Named.from(LocalDataServiceEpisodesImpl) required LocalDataService<EpisodeDto> localService,
-  }) : _dio = dio,
-       _localService = localService;
+    @Named.from(LocalDataServiceEpisodesImpl)
+    required LocalDataService<EpisodeDto> localService,
+  })  : _dio = dio,
+        _localService = localService;
 
   Future<List<EpisodeEntity>> fetchAllData() async {
     try {
@@ -37,11 +37,11 @@ class EpisodeRepository {
     }
   }
 
-  Future<int> getLastPage()async{
+  Future<int> getLastPage() async {
     return await _localService.getLastPage();
   }
 
-  Future<List<String>> getQuerisList() async{
+  Future<List<String>> getQuerisList() async {
     return await _localService.getCachedQueries();
   }
 
@@ -56,7 +56,8 @@ class EpisodeRepository {
       }
     } else {
       print('Fetching local data');
-      final cachedDtos = await _localService.getLastDtosFromCache() as List<EpisodeDto>;
+      final cachedDtos =
+          await _localService.getLastDtosFromCache() as List<EpisodeDto>;
       return _parseEpisodeDtos(cachedDtos);
     }
   }
@@ -83,17 +84,18 @@ class EpisodeRepository {
     }
   }
 
-  
-
   List<EpisodeEntity> _parseEpisodeDtos(List<EpisodeDto> dtos) {
     return dtos.map((dto) => EpisodeMapper.toEntity(dto)).toList();
   }
 
-  Future<List<EpisodeEntity>> _processResponseAndCache(Response response, int page) async {
+  Future<List<EpisodeEntity>> _processResponseAndCache(
+      Response response, int page) async {
     try {
       if (response.statusCode == 200) {
-        final List<dynamic> jsonData = response.data['results'] as List<dynamic>;
-        final List<EpisodeDto> dtos = jsonData.map((json) => EpisodeDto.fromJson(json)).toList();
+        final List<dynamic> jsonData =
+            response.data['results'] as List<dynamic>;
+        final List<EpisodeDto> dtos =
+            jsonData.map((json) => EpisodeDto.fromJson(json)).toList();
         await _localService.addDtosToCache(dtos, page);
         return _parseEpisodeDtos(dtos);
       } else {
@@ -104,4 +106,3 @@ class EpisodeRepository {
     }
   }
 }
-

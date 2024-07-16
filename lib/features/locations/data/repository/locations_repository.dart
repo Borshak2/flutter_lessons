@@ -7,8 +7,7 @@ import 'package:flutter_lesson_3_rick_v2/features/locations/data/mapper/location
 import 'package:flutter_lesson_3_rick_v2/features/locations/data/service_impl/local_data_service_impl.dart';
 import 'package:injectable/injectable.dart';
 
-
-enum LocationsFilter { name, type, dimension}
+enum LocationsFilter { name, type, dimension }
 
 @injectable
 class LocationRepository {
@@ -25,9 +24,10 @@ class LocationRepository {
   LocationRepository({
     required Dio dio,
     // required LocalDataService localService,
-    @Named.from(LocalDataServiceLocationsImpl) required LocalDataService<LocationDto> localService,
-  }) : _dio = dio,
-       _localService = localService;
+    @Named.from(LocalDataServiceLocationsImpl)
+    required LocalDataService<LocationDto> localService,
+  })  : _dio = dio,
+        _localService = localService;
 
   Future<List<LocationEntity>> fetchAllData() async {
     try {
@@ -38,13 +38,13 @@ class LocationRepository {
     }
   }
 
-Future<List<String>> getQueriesList() async{
-  return await _localService.getCachedQueries();
-}
+  Future<List<String>> getQueriesList() async {
+    return await _localService.getCachedQueries();
+  }
 
-  Future<int> getLastPage() async{
+  Future<int> getLastPage() async {
     return await _localService.getLastPage();
-  }  
+  }
 
   Future<List<LocationEntity>> fetchLocationsByPage(int page) async {
     final lastCachedPage = await _localService.getLastPage();
@@ -57,7 +57,8 @@ Future<List<String>> getQueriesList() async{
       }
     } else {
       print('Fetching local data');
-      final cachedDtos = await _localService.getLastDtosFromCache() as List<LocationDto>;
+      final cachedDtos =
+          await _localService.getLastDtosFromCache() as List<LocationDto>;
       return _parseLocationDtos(cachedDtos);
     }
   }
@@ -84,19 +85,18 @@ Future<List<String>> getQueriesList() async{
     }
   }
 
-  
-
   List<LocationEntity> _parseLocationDtos(List<LocationDto> dtos) {
     return dtos.map((dto) => LocationMapper.toEntity(dto)).toList();
   }
 
-  
-
-  Future<List<LocationEntity>> _processResponseAndCache(Response response, int page) async {
+  Future<List<LocationEntity>> _processResponseAndCache(
+      Response response, int page) async {
     try {
       if (response.statusCode == 200) {
-        final List<dynamic> jsonData = response.data['results'] as List<dynamic>;
-        final List<LocationDto> dtos = jsonData.map((json) => LocationDto.fromJson(json)).toList();
+        final List<dynamic> jsonData =
+            response.data['results'] as List<dynamic>;
+        final List<LocationDto> dtos =
+            jsonData.map((json) => LocationDto.fromJson(json)).toList();
         await _localService.addDtosToCache(dtos, page);
         return _parseLocationDtos(dtos);
       } else {
@@ -107,6 +107,3 @@ Future<List<String>> getQueriesList() async{
     }
   }
 }
-
-
-

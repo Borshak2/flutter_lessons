@@ -6,7 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
- setUpAll(() async {
+  setUpAll(() async {
     final Map<String, Object> values = <String, Object>{};
     SharedPreferences.setMockInitialValues(values);
   });
@@ -40,11 +40,10 @@ void main() {
   //   SharedPreferences.setMockInitialValues(values);
   // });
 
- 
-
- test('fetchDataByFilter returns ', () async {
+  test('fetchDataByFilter returns ', () async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    LocalDataServicePersonsImpl service = LocalDataServicePersonsImpl(sharedPreferences: sharedPreferences);
+    LocalDataServicePersonsImpl service =
+        LocalDataServicePersonsImpl(sharedPreferences: sharedPreferences);
     final dio = Dio(BaseOptions(baseUrl: 'https://rickandmortyapi.com/api/'));
     final personRepository = PersonRepository(dio: dio, localService: service);
 
@@ -56,26 +55,28 @@ void main() {
     }
   });
 
-
   test('fetchDataByPage returns a list of PersonEntity', () async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    LocalDataServicePersonsImpl service = LocalDataServicePersonsImpl(sharedPreferences: sharedPreferences);
+    LocalDataServicePersonsImpl service =
+        LocalDataServicePersonsImpl(sharedPreferences: sharedPreferences);
     final dio = Dio(BaseOptions(baseUrl: 'https://rickandmortyapi.com/api/'));
     final personRepository = PersonRepository(dio: dio, localService: service);
-    final personsFromSearh =  await personRepository.fetchDataByFilter(PersonFilter.name, 'Rick');
+    final personsFromSearh =
+        await personRepository.fetchDataByFilter(PersonFilter.name, 'Rick');
     final lastSearch = await personRepository.getSearchHistory();
     print(personsFromSearh);
     expect(lastSearch.first, 'Rick');
- 
   });
 
   test('fetchDataByUrl returns a PersonEntity', () async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    LocalDataServicePersonsImpl service = LocalDataServicePersonsImpl(sharedPreferences: sharedPreferences);
+    LocalDataServicePersonsImpl service =
+        LocalDataServicePersonsImpl(sharedPreferences: sharedPreferences);
     final dio = Dio(BaseOptions(baseUrl: 'https://rickandmortyapi.com/api/'));
     final personRepository = PersonRepository(dio: dio, localService: service);
 
-    final personByUrl = await personRepository.fetchDataByUrl('https://rickandmortyapi.com/api/character/1');
+    final personByUrl = await personRepository
+        .fetchDataByUrl('https://rickandmortyapi.com/api/character/1');
 
     expect(personByUrl, isA<PersonEntity>());
   });

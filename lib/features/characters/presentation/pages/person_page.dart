@@ -38,11 +38,10 @@ class _PersonPageState extends State<PersonPage>
       appBar: AppBar(
         actions: [
           IconButton(
-                onPressed: () {
-                  showSearch(
-                      context: context, delegate: CustomSearchDelegate());
-                },
-                icon: Icon(Icons.search)),
+              onPressed: () {
+                showSearch(context: context, delegate: CustomSearchDelegate());
+              },
+              icon: Icon(Icons.search)),
         ],
         title: const Text('Rick and Morty'),
         bottom: TabBar(

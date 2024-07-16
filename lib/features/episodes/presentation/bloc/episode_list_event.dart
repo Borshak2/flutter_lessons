@@ -1,5 +1,3 @@
-class EpisodeListEvent{}
+class EpisodeListEvent {}
 
-class EpisodeListStateGetData extends EpisodeListEvent{
-  
-}
+class EpisodeListStateGetData extends EpisodeListEvent {}

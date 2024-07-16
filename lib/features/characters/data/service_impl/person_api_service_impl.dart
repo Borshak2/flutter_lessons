@@ -7,7 +7,6 @@ import 'package:rxdart/subjects.dart';
 @Named("PersonService")
 @LazySingleton(as: RickAndMortyApiService<PersonEntity>)
 class PersonApiServiceImpl implements RickAndMortyApiService<PersonEntity> {
-
   late int pageNumber;
   final PersonRepository repository;
 
@@ -16,21 +15,21 @@ class PersonApiServiceImpl implements RickAndMortyApiService<PersonEntity> {
   final _personsList = BehaviorSubject<List<PersonEntity>>();
 
   @override
-  Stream<List<PersonEntity>> get getterEntitiesStream => _personsList.stream; 
+  Stream<List<PersonEntity>> get getterEntitiesStream => _personsList.stream;
   @override
- List<PersonEntity> get getterEntitiesList => _personsList.valueOrNull ?? [];
+  List<PersonEntity> get getterEntitiesList => _personsList.valueOrNull ?? [];
 
   @PostConstruct()
-  void init() async{
-    final newPage = await repository.getLastPage(); 
+  void init() async {
+    final newPage = await repository.getLastPage();
     pageNumber = newPage == 0 ? 1 : newPage;
-    final persons =  await fetchAndCacheEntityByPage(pageNumber);
+    final persons = await fetchAndCacheEntityByPage(pageNumber);
     _personsList.add(persons);
   }
 
   @override
-  void updateData()async{
-     final newPersons = await fetchAndCacheEntityByPage(pageNumber);
+  void updateData() async {
+    final newPersons = await fetchAndCacheEntityByPage(pageNumber);
     final currentPersons = _personsList.valueOrNull ?? [];
     _personsList.add(currentPersons + newPersons);
   }
@@ -45,17 +44,14 @@ class PersonApiServiceImpl implements RickAndMortyApiService<PersonEntity> {
   Future<List<PersonEntity>> fetchEntityByUrls(List<String> listUrl) async {
     return [];
   }
-  
 
   @override
   Future<List<String>> getSearchHistory() async {
-   return await repository.getSearchHistory();
+    return await repository.getSearchHistory();
   }
-  
+
   @override
-  Future<List<PersonEntity>> searchEntity(String query)async {
+  Future<List<PersonEntity>> searchEntity(String query) async {
     return await repository.fetchDataByFilter(PersonFilter.name, query);
   }
- 
 }
-

@@ -18,26 +18,26 @@ class SearchBloc extends Bloc<SearchBlocEvent, SearchBlocState> {
     emit(SearchBlocStateLoading(historyQueries.toList()));
     try {
       final resault = await service.searchEntity(event.query);
-      emit(SearchBlocStateLoaded(resault,historyQueries.toList()));
+      emit(SearchBlocStateLoaded(resault, historyQueries.toList()));
       historyQueries.add(event.query);
     } catch (_) {
       emit(SearchBlocStateEmpty(historyQueries.toList()));
     }
   }
 
-  void _deleteQueryInHistoy(DeleteQueryInHistoy event,emit){
+  void _deleteQueryInHistoy(DeleteQueryInHistoy event, emit) {
     final bool deleted = historyQueries.remove(event.query);
-    if(deleted){
+    if (deleted) {
       emit(SearchBlocStateEmpty(historyQueries.toList()));
     }
   }
 
-  void _intitalData(event,emit) async {
+  void _intitalData(event, emit) async {
     final List<String> queriesList = await service.getSearchHistory();
     if (queriesList.isNotEmpty) {
       historyQueries.addAll(queriesList.toSet());
       emit(SearchBlocStateEmpty(queriesList));
-    } else{
+    } else {
       emit(SearchBlocStateEmpty([]));
     }
   }

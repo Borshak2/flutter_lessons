@@ -1,4 +1,4 @@
-abstract class RickAndMortyApiService<T>{
+abstract class RickAndMortyApiService<T> {
   Future<List<T>> fetchAndCacheEntityByPage(int page);
   Future<List<T>> fetchEntityByUrls(List<String> listUrl);
   void updateData();

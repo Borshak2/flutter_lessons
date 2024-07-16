@@ -68,8 +68,7 @@ class CustomSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return BlocBuilder<SearchBloc, SearchBlocState>(
-      builder: (context, state) {
+    return BlocBuilder<SearchBloc, SearchBlocState>(builder: (context, state) {
       if (state.searchHistory.isEmpty) {
         return Container(
           decoration: const BoxDecoration(color: Colors.black),

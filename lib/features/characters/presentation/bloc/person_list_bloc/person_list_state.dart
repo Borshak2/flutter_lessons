@@ -16,8 +16,8 @@ class PersonListState {
     DataState? dataState,
   }) {
     return PersonListState(
-      personsList: personsList != null && personsList.isNotEmpty 
-          ? this.personsList + personsList 
+      personsList: personsList != null && personsList.isNotEmpty
+          ? this.personsList + personsList
           : this.personsList,
       dataState: dataState ?? this.dataState,
     );

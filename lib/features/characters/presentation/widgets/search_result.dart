@@ -7,7 +7,7 @@ class SearchResult extends StatelessWidget {
   final PersonEntity person;
   const SearchResult({super.key, required this.person});
 
-   @override
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {

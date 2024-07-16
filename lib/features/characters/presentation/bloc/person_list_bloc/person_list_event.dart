@@ -1,5 +1,3 @@
-class PersonListEvent{}
+class PersonListEvent {}
 
-class FetchPersonList extends PersonListEvent{
-  
-}
+class FetchPersonList extends PersonListEvent {}

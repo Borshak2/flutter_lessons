@@ -53,10 +53,9 @@ class LocalDataServicePersonsImpl implements LocalDataService<PersonDto> {
 
   @override
   Future<void> cacheQuery(String query) async {
-    final queriesList = sharedPreferences.getStringList(CACHED_QUERIES_LIST) ?? [];
+    final queriesList =
+        sharedPreferences.getStringList(CACHED_QUERIES_LIST) ?? [];
     queriesList.add(query);
     await sharedPreferences.setStringList(CACHED_QUERIES_LIST, queriesList);
   }
-  
-
 }

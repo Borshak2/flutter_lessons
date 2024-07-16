@@ -26,8 +26,6 @@ class EpisodeEntity extends ShortEpisodeEntity {
     required super.url,
   });
 
- 
-
   @override
   String toString() {
     return '$id,$name,$characters';

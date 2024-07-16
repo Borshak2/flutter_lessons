@@ -38,30 +38,27 @@ class LocationEntity extends ShortLocationEntity {
   List<Object?> get props => [id, name, type];
 }
 
+// factory LocationEntity.fromJson(Map<String, dynamic> json) {
+//   List list = json['residents'];
+//   return LocationEntity(
+//       id: json['id'],
+//       name: json['name'],
+//       type: json['type'],
+//       dimension: json['dimension'],
+//       url: json['url'],
+//       created: json['created'],
+//       residents: [...list],
+//       );
+// }
 
-
-
-  // factory LocationEntity.fromJson(Map<String, dynamic> json) {
-  //   List list = json['residents'];
-  //   return LocationEntity(
-  //       id: json['id'],
-  //       name: json['name'],
-  //       type: json['type'],
-  //       dimension: json['dimension'],
-  //       url: json['url'],
-  //       created: json['created'],
-  //       residents: [...list],
-  //       );
-  // }
-
-  // Map<String, dynamic> toJson() {
-  //   return {
-  //     'id': id,
-  //     'name': name,
-  //     'type': type,
-  //     'dimension': dimension,
-  //     'residents': residents,
-  //     'url': url,
-  //     'created': created,
-  //   };
-  // }
+// Map<String, dynamic> toJson() {
+//   return {
+//     'id': id,
+//     'name': name,
+//     'type': type,
+//     'dimension': dimension,
+//     'residents': residents,
+//     'url': url,
+//     'created': created,
+//   };
+// }

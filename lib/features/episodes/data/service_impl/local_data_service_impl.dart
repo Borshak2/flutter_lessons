@@ -48,9 +48,10 @@ class LocalDataServiceEpisodesImpl implements LocalDataService<EpisodeDto> {
 
   @override
   Future<void> cacheQuery(String query) async {
-   final queryList =  sharedPreferences.getStringList(CACHED_EPIOSDE_QUERIES_LIST) ?? [];
-   queryList.add(query);
-   sharedPreferences.setStringList(CACHED_EPIOSDE_QUERIES_LIST, queryList);
+    final queryList =
+        sharedPreferences.getStringList(CACHED_EPIOSDE_QUERIES_LIST) ?? [];
+    queryList.add(query);
+    sharedPreferences.setStringList(CACHED_EPIOSDE_QUERIES_LIST, queryList);
   }
 
   @override
