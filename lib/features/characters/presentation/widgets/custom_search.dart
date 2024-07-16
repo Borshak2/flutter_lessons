@@ -8,7 +8,8 @@ import 'package:flutter_lesson_3_rick_v2/features/characters/presentation/widget
 import 'package:flutter_lesson_3_rick_v2/features/characters/presentation/widgets/search_result.dart';
 
 class CustomSearchDelegate extends SearchDelegate {
-  CustomSearchDelegate() : super(searchFieldLabel: 'Search Person');
+  final SearchBloc bloc;
+  CustomSearchDelegate({required this.bloc}) : super(searchFieldLabel: 'Search Person');
 
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -32,9 +33,12 @@ class CustomSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    BlocProvider.of<SearchBloc>(context).add(SearchPerson(query));
+    // BlocProvider.of<SearchBloc>(context).add(SearchPerson(query));
+  bloc.add(SearchPerson(query));
+    return BlocBuilder<SearchBloc, SearchBlocState>(
+      bloc: bloc,
+      builder: (context, state) {
 
-    return BlocBuilder<SearchBloc, SearchBlocState>(builder: (context, state) {
       if (state is SearchBlocStateLoading) {
         return const Center(
           child: CircularProgressIndicator(),
@@ -68,7 +72,9 @@ class CustomSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return BlocBuilder<SearchBloc, SearchBlocState>(builder: (context, state) {
+    return BlocBuilder<SearchBloc, SearchBlocState>(
+      bloc: bloc,
+      builder: (context, state) {
       if (state.searchHistory.isEmpty) {
         return Container(
           decoration: const BoxDecoration(color: Colors.black),

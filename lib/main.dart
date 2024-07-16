@@ -14,24 +14,41 @@ void main() async {
   runApp(const MyApp());
 }
 
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) {
-        final service = inject<RickAndMortyApiService<PersonEntity>>(
-            instanceName: "PersonService");
-        return SearchBloc(service: service);
-      },
-      child: MaterialApp(
+    return  MaterialApp(
         theme: ThemeData.dark().copyWith(
           scaffoldBackgroundColor: AppColors.mainBackground,
         ),
         // home: const PersonPageOld(),
         home: const RootPage(),
-      ),
-    );
+      );
   }
 }
+
+
+// class MyApp extends StatelessWidget {
+//   const MyApp({Key? key}) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return BlocProvider(
+//       create: (_) {
+//         final service = inject<RickAndMortyApiService<PersonEntity>>(
+//             instanceName: "PersonService");
+//         return SearchBloc(service: service);
+//       },
+//       child: MaterialApp(
+//         theme: ThemeData.dark().copyWith(
+//           scaffoldBackgroundColor: AppColors.mainBackground,
+//         ),
+//         // home: const PersonPageOld(),
+//         home: const RootPage(),
+//       ),
+//     );
+//   }
+// }
