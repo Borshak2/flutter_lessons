@@ -3,20 +3,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_lesson_3_rick_v2/di/locator_service.dart';
 import 'package:flutter_lesson_3_rick_v2/domain/entities/person_entitiy.dart';
 import 'package:flutter_lesson_3_rick_v2/domain/service_interface/api_service.dart';
-import 'package:flutter_lesson_3_rick_v2/features/characters/presentation/bloc/person_search_bloc/search_bloc.dart';
+import 'package:flutter_lesson_3_rick_v2/features/characters/presentation/bloc/person_list_bloc/person_list_bloc.dart';
 import 'package:flutter_lesson_3_rick_v2/features/characters/presentation/widgets/custom_search.dart';
+import 'package:flutter_lesson_3_rick_v2/features/characters/presentation/widgets/list_persons.dart';
 import 'package:flutter_lesson_3_rick_v2/features/characters/presentation/widgets/person_tab.dart';
 import 'package:flutter_lesson_3_rick_v2/features/episodes/presentation/widgets/episode_tab.dart';
 import 'package:flutter_lesson_3_rick_v2/features/locations/presentation/widgets/locations_tabs.dart';
 
-class PersonPage extends StatefulWidget {
-  const PersonPage({Key? key}) : super(key: key);
+class PersonPageOld extends StatefulWidget {
+  const PersonPageOld({Key? key}) : super(key: key);
 
   @override
-  State<PersonPage> createState() => _PersonPageState();
+  State<PersonPageOld> createState() => _PersonPageOldState();
 }
 
-class _PersonPageState extends State<PersonPage>
+class _PersonPageOldState extends State<PersonPageOld>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
@@ -61,6 +62,22 @@ class _PersonPageState extends State<PersonPage>
           EpisodesTab(),
         ],
       ),
+    );
+  }
+}
+
+class PersonPage extends StatelessWidget {
+  const PersonPage({super.key});
+
+   @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) {
+        final service = inject<RickAndMortyApiService<PersonEntity>>(
+            instanceName: "PersonService");
+        return PersonListBloc(service: service);
+      },
+      child: ListPersonWidget(),
     );
   }
 }

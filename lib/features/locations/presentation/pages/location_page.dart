@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_lesson_3_rick_v2/di/locator_service.dart';
@@ -6,10 +7,10 @@ import 'package:flutter_lesson_3_rick_v2/domain/service_interface/api_service.da
 import 'package:flutter_lesson_3_rick_v2/features/locations/presentation/bloc/bloc.dart';
 import 'package:flutter_lesson_3_rick_v2/features/locations/presentation/widgets/list_locations_widget.dart';
 
-class LocationsTab extends StatelessWidget {
-  const LocationsTab({Key? key}) : super(key: key);
+class LocationPage extends StatelessWidget {
+  const LocationPage({super.key});
 
-  @override
+@override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) {

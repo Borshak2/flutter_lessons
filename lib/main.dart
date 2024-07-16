@@ -4,7 +4,7 @@ import 'package:flutter_lesson_3_rick_v2/common/app_colors.dart';
 import 'package:flutter_lesson_3_rick_v2/di/locator_service.dart';
 import 'package:flutter_lesson_3_rick_v2/domain/service_interface/api_service.dart';
 import 'package:flutter_lesson_3_rick_v2/features/characters/presentation/bloc/person_search_bloc/search_bloc.dart';
-import 'package:flutter_lesson_3_rick_v2/features/characters/presentation/pages/person_page.dart';
+import 'package:flutter_lesson_3_rick_v2/pages/root_page.dart';
 
 import 'domain/entities/person_entitiy.dart';
 
@@ -29,7 +29,8 @@ class MyApp extends StatelessWidget {
         theme: ThemeData.dark().copyWith(
           scaffoldBackgroundColor: AppColors.mainBackground,
         ),
-        home: const PersonPage(),
+        // home: const PersonPageOld(),
+        home: const RootPage(),
       ),
     );
   }
