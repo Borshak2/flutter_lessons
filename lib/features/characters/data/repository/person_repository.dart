@@ -66,7 +66,7 @@ class PersonRepository {
       final response = await _dio.get('$_endpoint$filterValue$data');
       return _parseResponse(response, data);
     } catch (e) {
-      throw ServerException();
+      return [];
     }
   }
 

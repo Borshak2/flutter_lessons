@@ -71,7 +71,7 @@ class LocationRepository {
       final response = await _dio.get('$_endpoint$filterValue$data');
       return _processResponseAndCache(response, 1);
     } catch (e) {
-      throw ServerException();
+      return [];
     }
   }
 
