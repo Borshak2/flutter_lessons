@@ -27,6 +27,7 @@ class _ListPersonWidgetState extends State<ListPersonWidget> {
 
   @override
   void initState() {
+    print('Create New Page');
     super.initState();
     setupController(context);
   }

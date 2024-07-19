@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_lesson_3_rick_v2/di/locator_service.dart';
 import 'package:flutter_lesson_3_rick_v2/domain/entities/episode_entitiy.dart';
@@ -5,79 +6,64 @@ import 'package:flutter_lesson_3_rick_v2/domain/entities/location_entity.dart';
 import 'package:flutter_lesson_3_rick_v2/domain/entities/person_entitiy.dart';
 import 'package:flutter_lesson_3_rick_v2/domain/service_interface/api_service.dart';
 import 'package:flutter_lesson_3_rick_v2/features/search/presentation/bloc/person_search_bloc/search_bloc.dart';
-import 'package:flutter_lesson_3_rick_v2/features/characters/presentation/pages/person_page.dart';
 import 'package:flutter_lesson_3_rick_v2/features/search/presentation/widgets/custom_search.dart';
-import 'package:flutter_lesson_3_rick_v2/features/episodes/presentation/pages/episode_page.dart';
-import 'package:flutter_lesson_3_rick_v2/features/locations/presentation/pages/location_page.dart';
+import 'package:flutter_lesson_3_rick_v2/router/app_router.dart';
 
-class RootPage extends StatefulWidget {
-  const RootPage({super.key});
+@RoutePage()
+class DashboardPage extends StatelessWidget {
+  final CustomSearchDelegate searchDelegate;
 
-  @override
-  State<RootPage> createState() => _RootPageState();
-}
-
-class _RootPageState extends State<RootPage> {
-  int _selectedIndex = 0;
-
-  static const List<Widget> _pages = <Widget>[
-    PersonPage(),
-    LocationPage(),
-    EpisodePage(),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-  SearchBloc createBloc() {
-    final personService = inject<RickAndMortyApiService<PersonEntity>>(
-        instanceName: "PersonService");
-         final episodeService = inject<RickAndMortyApiService<EpisodeEntity>>(
-        instanceName: "EpisodeService");
-           final locationService = inject<RickAndMortyApiService<LocationEntity>>(
-        instanceName: "LocationService");  
-    return SearchBloc(personService: personService, episodeService: episodeService, locationService: locationService);
-  }
+  DashboardPage({super.key})
+      : searchDelegate = CustomSearchDelegate(
+          key: UniqueKey(),
+          bloc: SearchBloc(
+            personService: inject<RickAndMortyApiService<PersonEntity>>(
+                instanceName: "PersonService"),
+            episodeService: inject<RickAndMortyApiService<EpisodeEntity>>(
+                instanceName: "EpisodeService"),
+            locationService: inject<RickAndMortyApiService<LocationEntity>>(
+                instanceName: "LocationService"),
+          ),
+        );
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-              onPressed: () {
-                showSearch(
-                    context: context,
-                    delegate: CustomSearchDelegate(bloc: createBloc()));
-              },
-              icon: Icon(Icons.search)),
-        ],
-        title: const Text('Rick and Morty'),
+    return AutoTabsRouter(
+      routes: [
+        PersonRoute(appBar: searchDelegate),
+        LocationRoute(appBar: searchDelegate),
+        EpisodeRoute(appBar: searchDelegate),
+      ],
+      transitionBuilder: (context, child, animation) => FadeTransition(
+        opacity: animation,
+        child: child,
       ),
-      body: _pages[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Persons',
+      builder: (context, child) {
+        final tabsRouter = AutoTabsRouter.of(context);
+        return Scaffold(
+          body: child,
+          bottomNavigationBar: BottomNavigationBar(
+            currentIndex: tabsRouter.activeIndex,
+            onTap: (index) {
+              tabsRouter.setActiveIndex(index);
+            },
+            items: const [
+              BottomNavigationBarItem(
+                label: 'person',
+                icon: Icon(Icons.person),
+              ),
+              BottomNavigationBarItem(
+                label: 'location',
+                icon: Icon(Icons.location_on),
+              ),
+              BottomNavigationBarItem(
+                label: 'episode',
+                icon: Icon(Icons.tv),
+              ),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.location_on),
-            label: 'Locations',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.tv),
-            label: 'Episodes',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
-      ),
+        );
+      },
     );
   }
 }
-
