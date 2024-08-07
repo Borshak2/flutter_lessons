@@ -38,18 +38,22 @@ class _ListEpisodesWidgetState extends State<ListEpisodesWidget> {
         if (state.dataState == DataState.loading) {
           return Center(child: CircularProgressIndicator());
         } else {
-          return ListView.separated(
-            key: const PageStorageKey<String>('ListEpisodeWidget'),
+          return CustomScrollView(
             controller: scrollController,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(state.episodesList[index].name),
-                subtitle: Text(state.episodesList[index].episode),
-              );
-              // return PersonCard(person: state.personsList[index]);
-            },
-            separatorBuilder: (context, index) => Divider(),
-            itemCount: state.episodesList.length,
+            slivers: [
+              SliverList.separated(
+                key: const PageStorageKey<String>('ListEpisodeWidget'),
+                itemBuilder: (BuildContext context, int index) {
+                  return ListTile(
+                    title: Text(state.episodesList[index].name),
+                    subtitle: Text(state.episodesList[index].episode),
+                  );
+                },
+                separatorBuilder: (BuildContext context, int index) =>
+                    Divider(),
+                itemCount: state.episodesList.length,
+              ),
+            ],
           );
         }
       },

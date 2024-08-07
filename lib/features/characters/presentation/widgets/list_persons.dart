@@ -27,7 +27,6 @@ class _ListPersonWidgetState extends State<ListPersonWidget> {
 
   @override
   void initState() {
-    print('Create New Page');
     super.initState();
     setupController(context);
   }
@@ -37,20 +36,21 @@ class _ListPersonWidgetState extends State<ListPersonWidget> {
     return BlocBuilder<PersonListBloc, PersonListState>(
       builder: (context, state) {
         if (state.dataState == DataState.loading) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         } else {
-          return ListView.separated(
-            key: const PageStorageKey<String>('ListPersonWidget'),
+          return CustomScrollView(
             controller: scrollController,
-            itemBuilder: (context, index) {
-              // return ListTile(
-              //   title: Text(state.personsList[index].name),
-              //   subtitle: Text(state.personsList[index].status),
-              // );
-              return PersonCard(person: state.personsList[index]);
-            },
-            separatorBuilder: (context, index) => Divider(),
-            itemCount: state.personsList.length,
+            slivers: [
+              SliverList.separated(
+                key: const PageStorageKey('ListPersonPage'),
+                itemBuilder: (BuildContext context, int index) {
+                  return PersonCard(person: state.personsList[index]);
+                },
+                separatorBuilder: (BuildContext context, int index) =>
+                    Divider(),
+                itemCount: state.personsList.length,
+              ),
+            ],
           );
         }
       },

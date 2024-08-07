@@ -38,18 +38,22 @@ class _ListLocationsWidgetState extends State<ListLocationsWidget> {
         if (state.dataState == DataState.loading) {
           return Center(child: CircularProgressIndicator());
         } else {
-          return ListView.separated(
-            key: const PageStorageKey<String>('ListLocationWidget'),
+          return CustomScrollView(
             controller: scrollController,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(state.locationsList[index].name),
-                subtitle: Text(state.locationsList[index].type),
-              );
-              // return PersonCard(person: state.personsList[index]);
-            },
-            separatorBuilder: (context, index) => Divider(),
-            itemCount: state.locationsList.length,
+            slivers: [
+              SliverList.separated(
+                key: const PageStorageKey<String>('ListLocationWidget'),
+                itemBuilder: (BuildContext context, int index) {
+                  return ListTile(
+                    title: Text(state.locationsList[index].name),
+                    subtitle: Text(state.locationsList[index].type),
+                  );
+                },
+                separatorBuilder: (BuildContext context, int index) =>
+                    Divider(),
+                itemCount: state.locationsList.length,
+              ),
+            ],
           );
         }
       },
